@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +13,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// Public routes
+Route::post(
+    '/register',
+    'App\Http\Controllers\API\v1\AuthController@register'
+);
+
+Route::post(
+    '/login',
+    'App\Http\Controllers\API\v1\AuthController@login'
+);
+
+// Protected routes
+Route::middleware(['auth:api'])->group(function () {
+
+    // Transaction operation
+    Route::post(
+        '/transaction',
+        'App\Http\Controllers\API\v1\TransactionController@transaction'
+    )
+        ->middleware('transaction.validation');
 });
