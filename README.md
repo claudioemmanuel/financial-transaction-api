@@ -23,12 +23,13 @@ $ php artisan migrate:fresh --seed
 
 Execute o comando para instalação do [Laravel Passport](https://laravel.com/docs/8.x/passport) para camada de segurança da API
 ```bash
-php artisan passport:install --force
+$ php artisan passport:install --force
 ```
 
 Inicie o servidor para testes na API via Postman ou Insomnia
 ```bash
-php artisan serve
+$ php artisan key:generate
+$ php artisan serve
 ```
 
 ## 💻 Insomnia
