@@ -31,6 +31,9 @@ Inicie o servidor para testes na API via Postman ou Insomnia
 php artisan serve
 ```
 
+## 💻 Insomnia
+Caso queira utilizar o Insomnia, basta importar o arquivo em **docs/Insomnia.json** para testar API.
+
 ## 🔗 Routes 
 #### /register - POST para criar o usuário na API
 
