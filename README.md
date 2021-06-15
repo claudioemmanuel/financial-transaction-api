@@ -1,62 +1,99 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+## 🖥 Tecnologias
+#### `Back-end`
+- [Laravel](https://laravel.com/)
+#### para executar a aplicação sera necessário o [Composer](https://getcomposer.org/download/)
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 🎴 Como Usar?
 
-## About Laravel
+Instalação do projeto
+```bash
+$ composer install
+```
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+#### Após copie/duplique o arquivo .env.example e renomeie para .env configurando com suas variáveis de ambiente de banco
+Insira as 2 variáveis de ambiente abaixo ao final do arquivo .env configurado anteriormente
+```bash
+API_AUTHORIZE_TRANSACTION = https://run.mocky.io/v3/8fafdd68-a090-496f-8c9a-3442cf30dae6
+API_NOTIFICATION = http://o4d9z.mocklab.io/notify
+```
+Execute o comando abaixo para popular o banco com os usuários
+```bash
+$ php artisan migrate:fresh --seed
+```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Execute o comando para instalação do [Laravel Passport](https://laravel.com/docs/8.x/passport) para camada de segurança da API
+```bash
+php artisan passport:install --force
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Inicie o servidor para testes na API via Postman ou Insomnia
+```bash
+php artisan serve
+```
 
-## Learning Laravel
+## 🔗 Routes 
+#### /register - POST para criar o usuário na API
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Exemplo de usuário comum 
+```bash
+curl --request POST \
+  --url http://127.0.0.1:8000/api/register \
+  --header 'Accept: application/json' \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"user_type_id": "1",
+	"name": "Claudio Emmanuel de Araujo Souza",
+	"cpf_cnpj": "094.312.736-08",
+	"email": "claudio@claudio.com.br",
+	"password": "123456"
+}'
+```
+Exemplo de usuário lojista 
+```bash
+curl --request POST \
+  --url http://127.0.0.1:8000/api/register \
+  --header 'Accept: application/json' \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"user_type_id": "2",
+	"name": "Emmanuel Lino de Souza",
+	"cpf_cnpj": "74.208.195\/0001-04",
+	"email": "emmanuel@emmanuel.com.br",
+	"password": "123456"
+}'
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+#### /login - POST para logar na API e receber o token de autorização
 
-## Laravel Sponsors
+Exemplo a ser enviado
+```bash
+curl --request POST \
+  --url http://127.0.0.1:8000/api/login \
+  --header 'Accept: application/json' \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"email": "claudio@claudio.com.br",
+	"password": "123456"
+}'
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+#### /transaction - POST para efetuar a transação de valores entre usuários
+Substitua o token retornado na rota /login em {SEU TOKEN AQUI} para autorização da transação sem o token você não estará logado e apto a efetuar transferências na API
 
-### Premium Partners
+Exemplo a ser enviado
+```bash
+curl --request POST \
+  --url http://127.0.0.1:8000/api/transaction \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer {SEU TOKEN AQUI}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"value": 10,
+	"payee": 4
+}'
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
+## 📙 Licença
+> Com base nos termos de [MIT LICENSE](https://opensource.org/licenses/MIT)
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+##### Feito por Claudio Emmanuel com ❤️
