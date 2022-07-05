@@ -47,7 +47,7 @@ curl --request POST \
   --data '{
 	"user_type_id": "1",
 	"name": "Claudio Emmanuel de Araujo Souza",
-	"cpf_cnpj": "094.312.736-08",
+	"cpf_cnpj": "111.111.111-11",
 	"email": "claudio@claudio.com.br",
 	"password": "123456"
 }'
